@@ -6,10 +6,6 @@ class StringCalculator {
 
     final numbers = input.split(commaNewLineRegEx);
 
-    if (numbers.length > 2) {
-      throw FormatException("Only up to two numbers are allowed");
-    }
-
     return numbers.map(int.parse).fold(0, (a, b) => a + b);
   }
 }
