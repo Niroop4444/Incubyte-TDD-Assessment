@@ -9,7 +9,6 @@ class StringCalculator {
     String numbersPart = input;
 
     final match = customDelimiterRegEx.firstMatch(input);
-
     if (match != null) {
       final delimiter = match.group(1)!;
       numbersPart = match.group(2)!;
@@ -18,10 +17,19 @@ class StringCalculator {
       activeDelimiter = RegExp('($escapedDelimiter|,|\n)');
     }
 
-    return numbersPart
+    final numbers = numbersPart
         .split(activeDelimiter)
         .where((s) => s.trim().isNotEmpty)
         .map(int.parse)
-        .fold(0, (sum, n) => sum + n);
+        .toList();
+
+    final negatives = numbers.where((n) => n < 0).toList();
+    if (negatives.isNotEmpty) {
+      throw FormatException(
+        'negative numbers not allowed: ${negatives.join(",")}',
+      );
+    }
+
+    return numbers.fold(0, (sum, n) => sum + n);
   }
 }
