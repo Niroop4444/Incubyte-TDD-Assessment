@@ -5,16 +5,28 @@ class StringCalculator {
   int add(String input) {
     if (input.trim().isEmpty) return 0;
 
+    input = input.replaceAll(r'\n', '\n');
+
     RegExp activeDelimiter = defaultDelimiter;
     String numbersPart = input;
 
     final match = customDelimiterRegEx.firstMatch(input);
     if (match != null) {
-      final delimiter = match.group(1)!;
+      String delimiterSection = match.group(1)!;
       numbersPart = match.group(2)!;
 
-      final escapedDelimiter = RegExp.escape(delimiter);
-      activeDelimiter = RegExp('($escapedDelimiter|,|\n)');
+      List<String> delimiters = [];
+      final bracketRegEx = RegExp(r'\[(.+?)\]');
+      final bracketMatches = bracketRegEx.allMatches(delimiterSection);
+
+      if (bracketMatches.isNotEmpty) {
+        delimiters = bracketMatches.map((m) => m.group(1)!).toList();
+      } else {
+        delimiters = [delimiterSection];
+      }
+
+      final escaped = delimiters.map(RegExp.escape).join('|');
+      activeDelimiter = RegExp('($escaped|,|\n)');
     }
 
     final numbers = numbersPart
