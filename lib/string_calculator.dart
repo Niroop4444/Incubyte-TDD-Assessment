@@ -30,6 +30,8 @@ class StringCalculator {
       );
     }
 
-    return numbers.fold(0, (sum, n) => sum + n);
+    final validNumbers = numbers.where((n) => n <= 1000);
+
+    return validNumbers.fold(0, (sum, n) => sum + n);
   }
 }
