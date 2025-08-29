@@ -1,11 +1,15 @@
 class StringCalculator {
-  final RegExp commaNewLineRegEx = RegExp(r'[,]');
+  final RegExp commaNewLineRegEx = RegExp(r'[,\n]');
 
   int add(String input) {
     if (input.trim().isEmpty) return 0;
 
-    final numbers = input.split(commaNewLineRegEx);
+    input = input.replaceAll(r'\n', '\n');
 
-    return numbers.map(int.parse).fold(0, (a, b) => a + b);
+    return input
+        .split(commaNewLineRegEx)
+        .where((numbers) => numbers.trim().isNotEmpty)
+        .map(int.parse)
+        .fold(0, (a, b) => a + b);
   }
 }
