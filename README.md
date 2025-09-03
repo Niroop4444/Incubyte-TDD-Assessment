@@ -28,9 +28,22 @@ Implement a calculator that takes a string of numbers separated by delimiters an
 Prerequisites
 Dart SDK or Flutter SDK
 A code editor
+
 📁 Folder strucuture
 
-├── lib/ │ ├── string_calculator.dart # Main calculator logic | ├── main.dart # Minimal UI ├── test/ │ ├── step1_return_zero.dart │ ├── step2_return_number.dart │ ├── ... ├── pubspec.yaml
+├── lib/ 
+│ 
+├── string_calculator.dart # Main calculator logic 
+| 
+├── main.dart # Minimal UI 
+├── test/ 
+│ 
+├── step1_return_zero.dart 
+│ 
+├── step2_return_number.dart 
+│ 
+├── ... 
+├── pubspec.yaml
 
 The main.dart file consits of the minimal UI of the TextFormField, ElevatedButton & RichText
 
