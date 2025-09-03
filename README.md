@@ -52,12 +52,14 @@ I created a minimal Flutter UI in the main.dart file using a TextFormField for i
 I encapsulated the core logic in a separate class called StringCalculator, following the Single Responsibility Principle.
 The class contains an add method that performs all the parsing and calculation.
 To manage different kinds of delimiters, I introduced two regular expressions: -> commaNewLineRegEx to handle default delimiters (, and \n) -> customCommaRegEx to detect and apply custom delimiters from input (e.g., //;\n1;2)
+
 ✅ Step 1: Basic Comma-Separated Inputs
 
 Used split(',') to separate the numbers.
 Parsed each number with int.parse.
 Handled empty string by returning 0.
 Threw a FormatException for more than two numbers or if input starts/ends with a comma.
+
 ✅ Step 2: Support Any Amount of Numbers
 
 Removed the check that limited input to only two numbers.
@@ -66,17 +68,20 @@ Removed the check that limited input to only two numbers.
 // if (numbers.length > 2) {
 //   throw FormatException("Only up to 2 numbers are allowed");
 // }
+
 ✅ Step 3: Support Newline as Delimiter
 
 Introduced a regular expression commaNewLineRegEx = RegExp(r'[,\n]') to handle both comma and newline.
 Updated split(delimiter) to use the combined regex instead of just comma.
 Enabled inputs like "1\n2" or "1\n2,3".
+
 ✅ Step 4: Support Custom Delimiters
 
 Introduced customCommaRegEx = RegExp(r'^//(.+)\n(.*)$') to detect custom delimiters.
 If custom delimiter syntax is matched, used that character as the delimiter instead of default regex.
 Escaped custom delimiters with RegExp.escape(customDelimiter) for safety.
 Updated logic to extract the actual number section from the input.
+
 ✅ Step 5: Handle Negative Numbers
 
 After parsing numbers, filtered negative values using: final negatives = numbers.where((n) => n < 0).toList();
@@ -84,6 +89,7 @@ If any negative numbers were found, threw a FormatException listing all of them:
 if (negatives.isNotEmpty) {
   throw FormatException("negative numbers not allowed: ${negatives.join(',')}");
 }
+
 ✅ Step 6: Ignore Numbers > 1000
 
 Applied a filter before summing to exclude numbers greater than 1000:
